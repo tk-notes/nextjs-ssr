@@ -3,10 +3,8 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "./features/counter/counterSlice";
 import { createWrapper } from "next-redux-wrapper";
 
-// `combineSlices` automatically combines the reducers using
-// their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(counterSlice);
-// Infer the `RootState` type from the root reducer
+
 export type RootState = ReturnType<typeof rootReducer>;
 
 // `makeStore` encapsulates the store configuration to allow
@@ -21,9 +19,7 @@ export const makeStore = () => {
 
 export const wrapper = createWrapper(makeStore, { debug: true });
 
-// Infer the return type of `makeStore`
 export type AppStore = ReturnType<typeof makeStore>;
-// Infer the `AppDispatch` type from the store itself
 export type AppDispatch = AppStore["dispatch"];
 export type AppThunk<ThunkReturnType = void> = ThunkAction<
   ThunkReturnType,
