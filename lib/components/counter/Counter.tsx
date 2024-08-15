@@ -61,13 +61,6 @@ export const Counter = () => {
           Add Amount
         </button>
         <button
-          className={styles.asyncButton}
-          disabled={status !== "idle"}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
-        >
-          Add Async
-        </button>
-        <button
           className={styles.button}
           onClick={() => {
             dispatch(incrementIfOdd(incrementValue));
