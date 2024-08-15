@@ -2,6 +2,7 @@ import { createAppSlice } from "@/lib/createAppSlice";
 import type { AppThunk } from "@/lib/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { fetchCount } from "./counterAPI";
+import { HYDRATE } from "next-redux-wrapper";
 
 export interface CounterSliceState {
   value: number;
@@ -34,7 +35,7 @@ export const counterSlice = createAppSlice({
     incrementByAmount: create.reducer(
       (state, action: PayloadAction<number>) => {
         state.value += action.payload;
-      },
+      }
     ),
     // The function below is called a thunk and allows us to perform async logic. It
     // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -58,7 +59,7 @@ export const counterSlice = createAppSlice({
         rejected: (state) => {
           state.status = "failed";
         },
-      },
+      }
     ),
   }),
   // You can define your selectors here. These selectors receive the slice
@@ -66,6 +67,16 @@ export const counterSlice = createAppSlice({
   selectors: {
     selectCount: (counter) => counter.value,
     selectStatus: (counter) => counter.status,
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (state, action) => {
+      console.log("HYDRATE", state, action.payload);
+      return {
+        ...state,
+        ...action.payload.subject,
+      };
+    });
   },
 });
 
