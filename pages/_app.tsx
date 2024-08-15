@@ -5,12 +5,8 @@ import { AppProps } from "next/app";
 
 export default function Layout({ Component }: AppProps) {
   return (
-    <html lang="en">
-      <StoreProvider>
-        <body>
-          <Component />
-        </body>
-      </StoreProvider>
-    </html>
+    <StoreProvider>
+      <Component />
+    </StoreProvider>
   );
 }
